@@ -154,6 +154,7 @@ fi
 write_s6_env API_SERVER_ENABLED true
 write_s6_env API_SERVER_HOST 127.0.0.1
 write_s6_env API_SERVER_KEY "$(tr -d '\r\n' < "${INTERNAL_API_KEY_FILE}")"
+chmod 0600 "${S6_ENV_DIR}/API_SERVER_KEY"
 
 ENABLE_TERMINAL="$("${HERMES_PYTHON}" - <<'PY'
 import json
