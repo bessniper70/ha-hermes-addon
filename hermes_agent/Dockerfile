@@ -6,13 +6,9 @@ ARG BUILD_VERSION
 ARG BUILD_ARCH
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl nginx \
+    && apt-get install -y --no-install-recommends curl nginx python3-yaml \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /run/nginx
-
-# The add-on config hook uses the Hermes virtualenv Python interpreter.
-# Install PyYAML into that exact environment (not the system Python).
-RUN /opt/hermes/.venv/bin/python -m pip install --no-cache-dir PyYAML
 
 ARG TARGETARCH
 RUN ARCH=$(echo ${TARGETARCH:-$(dpkg --print-architecture)} | sed 's|arm64|aarch64|;s|amd64|x86_64|') \
