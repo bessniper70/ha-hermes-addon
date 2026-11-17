@@ -29,6 +29,9 @@ configuration:
   hass_url:
     name: Home Assistant URL
     description: Home Assistant base URL reachable from this add-on.
+  hass_entity_allowlist:
+    name: Home Assistant entity allowlist
+    description: Comma-separated entity IDs or patterns that the Home Assistant tools may read or control.
   enable_dashboard_tui:
     name: Enable dashboard chat tab
     description: Enables Hermes dashboard TUI support.
