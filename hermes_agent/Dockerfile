@@ -28,6 +28,6 @@ COPY addon-run.sh /addon-run.sh
 COPY run.sh /etc/cont-init.d/03-addon-config
 COPY s6-rc.d/addon-ingress/ /etc/s6-overlay/s6-rc.d/addon-ingress/
 COPY s6-rc.d/user/contents.d/addon-ingress /etc/s6-overlay/s6-rc.d/user/contents.d/addon-ingress
-RUN chmod a+x /etc/cont-init.d/00-addon-config /addon-run.sh /usr/local/bin/ttyd
+RUN chmod a+x /etc/cont-init.d/03-addon-config /addon-run.sh /usr/local/bin/ttyd
 
 CMD ["gateway", "run"]
