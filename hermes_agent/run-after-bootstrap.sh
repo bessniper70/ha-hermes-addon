@@ -122,6 +122,12 @@ parts.append('\n'.join(managed_lines))
 env_path.write_text('\n\n'.join(parts).rstrip() + '\n', encoding='utf-8')
 PY
 
+# The upstream bootstrap runs before this hook. This hook runs as root, so
+# restore hermes ownership and private permissions on the files it just wrote.
+chown hermes:hermes "${HERMES_DATA_DIR}/config.yaml" "${HERMES_DATA_DIR}/.env" "${INTERNAL_API_KEY_FILE}" 2>/dev/null || true
+chmod 0600 "${HERMES_DATA_DIR}/.env" "${INTERNAL_API_KEY_FILE}"
+chown -R hermes:hermes "${WORKSPACE_DIR}" "${HERMES_DATA_DIR}/nginx"
+
 # Export add-on settings into s6-overlay's persistent container environment.
 # The upstream image owns PID 1 and starts its services through s6; a legacy
 # custom ENTRYPOINT would bypass supervision and break the dashboard/gateway.
