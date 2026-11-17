@@ -79,7 +79,7 @@ When `hass_token` is configured, the add-on enables the Home Assistant gateway p
 hermes plugins install homeassistant
 ```
 
-The smart-home tools include `ha_list_entities`, `ha_get_state`, `ha_list_services`, and `ha_call_service`. The `hass_entity_allowlist` is passed to the official plugin as `HASS_ENTITY_ALLOWLIST`, limiting both reads and service-control targets to configured entities. Real-time state-change notifications require at least one event filter under `platforms.homeassistant.extra` in `config.yaml`; the add-on preserves any filters you add there.
+The smart-home tools include `ha_list_entities`, `ha_get_state`, `ha_list_services`, and `ha_call_service`. The add-on automatically installs the official plugin into the default Hermes profile when a token is configured. The `hass_entity_allowlist` is passed to the official plugin as `HASS_ENTITY_ALLOWLIST`, limiting both reads and service-control targets to configured entities. Real-time state-change notifications require at least one event filter under `platforms.homeassistant.extra` in `config.yaml`; the add-on preserves any filters you add there.
 
 ### `enable_dashboard_tui`
 
