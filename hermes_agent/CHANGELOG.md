@@ -1,8 +1,11 @@
 # Changelog
 
-## 2026.11.17-2
+## 2026.11.17-3
 
 - Upgrade the base Hermes Agent image to v0.23.2.
+- Run add-on configuration after upstream bootstrap and config migration.
+- Default Home Assistant access to the BYD battery sensor using the plugin entity allowlist.
+- Add multi-architecture Docker build validation for pull requests.
 - Preserve the upstream s6-overlay entrypoint and run the gateway as the container main process.
 - Move add-on initialization into an ordered s6 cont-init hook and supervise ingress nginx through s6.
 - Add optional Home Assistant token/URL settings and enable the official Home Assistant plugin when configured.
