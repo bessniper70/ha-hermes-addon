@@ -10,6 +10,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /run/nginx
 
+# The add-on config hook uses the Hermes virtualenv Python interpreter.
+# Install PyYAML into that exact environment (not the system Python).
+RUN /opt/hermes/.venv/bin/python -m pip install --no-cache-dir PyYAML
+
 ARG TARGETARCH
 RUN ARCH=$(echo ${TARGETARCH:-$(dpkg --print-architecture)} | sed 's|arm64|aarch64|;s|amd64|x86_64|') \
     && curl -fsSL "https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.${ARCH}" -o /usr/local/bin/ttyd \
