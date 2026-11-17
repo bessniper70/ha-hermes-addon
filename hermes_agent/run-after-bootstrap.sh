@@ -5,7 +5,7 @@ OPTIONS_FILE="/data/options.json"
 HERMES_DATA_DIR="/data"
 WORKSPACE_DIR="${HERMES_DATA_DIR}/workspace"
 INTERNAL_API_KEY_FILE="${HERMES_DATA_DIR}/.ha_api_server_key"
-HERMES_PYTHON="/opt/hermes/.venv/bin/python"
+HERMES_PYTHON="/usr/bin/python3"
 
 if [ ! -f "${OPTIONS_FILE}" ]; then
   echo "Missing ${OPTIONS_FILE}"
