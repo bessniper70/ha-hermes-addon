@@ -116,7 +116,7 @@ If you want the full upstream setup flow, install notes, and provider details, s
 
 ## Notes
 
-- This add-on pins Hermes to `v0.23.1`.
+- This add-on pins Hermes to `v0.23.2`.
 - Supported Home Assistant architectures are `amd64` and `aarch64`.
 - The ingress root page is a custom launcher with an embedded terminal.
 - The full Hermes dashboard is exposed under `/dashboard/` behind ingress.
