@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026.11.17-1
+
+- Upgrade the base Hermes Agent image to v0.23.1.
+- Preserve the upstream s6-overlay entrypoint and run the gateway as the container main process.
+- Move add-on initialization into an ordered s6 cont-init hook and supervise ingress nginx through s6.
+- Add optional Home Assistant token/URL settings and enable the official Home Assistant plugin when configured.
+
 ## 2026.5.7-20
 
 - Fix the full dashboard router basename by injecting the real ingress `/dashboard` prefix into the served HTML
