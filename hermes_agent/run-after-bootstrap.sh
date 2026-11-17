@@ -97,6 +97,7 @@ managed = {
     'HASS_TOKEN': hass_token,
     'HASS_URL': hass_url,
     'HASS_ENTITY_ALLOWLIST': hass_entity_allowlist,
+    'API_SERVER_KEY': Path('/data/.ha_api_server_key').read_text(encoding='utf-8').strip(),
 }
 
 begin = '# BEGIN HA-HERMES-ADDON'
@@ -107,6 +108,8 @@ if env_path.exists():
 
 pattern = re.compile(r'\n?# BEGIN HA-HERMES-ADDON\n.*?# END HA-HERMES-ADDON\n?', re.S)
 existing = re.sub(pattern, '\n', existing).rstrip()
+# Keep the add-on's persistent API key as the single source of truth.
+existing = re.sub(r'(?m)^API_SERVER_KEY=.*(?:\n|$)', '', existing).rstrip()
 
 managed_lines = [begin]
 for key, value in managed.items():
@@ -176,8 +179,12 @@ write_s6_env ENABLE_TERMINAL "${ENABLE_TERMINAL}"
 # Install the official HA plugin into the default profile when a token is configured.
 # Installation failures are non-fatal so Telegram/Gemini and the gateway can still start.
 if [ -n "${hass_token}" ]; then
-  if ! s6-setuidgid hermes env HOME=/data HERMES_HOME=/data /opt/hermes/.venv/bin/hermes plugins install homeassistant; then
-    echo "[addon] WARNING: Home Assistant plugin installation failed; check network and retry from the terminal."
+  if ! s6-setuidgid hermes env HOME=/data HERMES_HOME=/data /opt/hermes/.venv/bin/hermes plugins list --plain --user | grep -q "^homeassistant"; then
+    if ! s6-setuidgid hermes env HOME=/data HERMES_HOME=/data /opt/hermes/.venv/bin/hermes plugins install homeassistant --yes-deps --enable; then
+      echo "[addon] WARNING: Home Assistant plugin installation failed; check network and retry from the terminal."
+    fi
+  else
+    echo "[addon] Home Assistant plugin already installed; skipping."
   fi
 fi
 
