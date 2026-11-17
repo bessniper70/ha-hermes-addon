@@ -141,6 +141,16 @@ write_s6_env TZ "${TZ_VALUE}"
 write_s6_env HERMES_DASHBOARD 1
 write_s6_env HERMES_DASHBOARD_HOST 127.0.0.1
 write_s6_env HERMES_DASHBOARD_PORT 9120
+ENABLE_DASHBOARD_TUI="$("${HERMES_PYTHON}" - <<'PY'
+import json
+from pathlib import Path
+options = json.loads(Path('/data/options.json').read_text(encoding='utf-8'))
+print('true' if options.get('enable_dashboard_tui') else 'false')
+PY
+)"
+if [ "${ENABLE_DASHBOARD_TUI}" = "true" ]; then
+  write_s6_env HERMES_DASHBOARD_TUI 1
+fi
 write_s6_env API_SERVER_ENABLED true
 write_s6_env API_SERVER_HOST 127.0.0.1
 write_s6_env API_SERVER_KEY "$(tr -d '\\r\\n' < "${INTERNAL_API_KEY_FILE}")"
