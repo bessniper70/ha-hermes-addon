@@ -1,7 +1,11 @@
 #!/command/with-contenv sh
 set -eu
-export HOME=/opt/data
-cd /opt/data
+export HOME=/data
+cd /data
+
+mkdir -p /data/nginx/body /data/nginx/proxy /data/nginx/fastcgi /data/nginx/uwsgi /data/nginx/scgi
+chown -R hermes:hermes /data/nginx
+chmod 0750 /data/nginx /data/nginx/body /data/nginx/proxy /data/nginx/fastcgi /data/nginx/uwsgi /data/nginx/scgi
 
 TTYD_PID=""
 NGINX_PID=""
