@@ -166,3 +166,13 @@ print('true' if options.get('enable_terminal', True) else 'false')
 PY
 )"
 write_s6_env ENABLE_TERMINAL "${ENABLE_TERMINAL}"
+
+# Install the official HA plugin into the default profile when a token is configured.
+# Installation failures are non-fatal so Telegram/Gemini and the gateway can still start.
+if [ -n "${hass_token}" ]; then
+  if ! s6-setuidgid hermes env HOME=/data HERMES_HOME=/data /opt/hermes/.venv/bin/hermes plugins install homeassistant; then
+    echo "[addon] WARNING: Home Assistant plugin installation failed; check network and retry from the terminal."
+  fi
+fi
+
+
