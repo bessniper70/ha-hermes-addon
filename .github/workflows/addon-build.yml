@@ -1,0 +1,47 @@
+name: Add-on Docker build
+
+on:
+  pull_request:
+    paths:
+      - 'hermes_agent/**'
+      - '.github/workflows/addon-build.yml'
+  push:
+    branches:
+      - master
+    paths:
+      - 'hermes_agent/**'
+      - '.github/workflows/addon-build.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ${{ matrix.platform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux/amd64
+            arch: amd64
+          - platform: linux/arm64
+            arch: aarch64
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build add-on image (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: ./hermes_agent
+          file: ./hermes_agent/Dockerfile
+          platforms: ${{ matrix.platform }}
+          push: false
+          build-args: |
+            BUILD_VERSION=ci
+            BUILD_ARCH=${{ matrix.arch }}
+          provenance: false

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026.11.17-4
+
+- Upgrade the base Hermes Agent image to v0.23.2.
+- Run add-on configuration after upstream bootstrap and config migration.
+- Default Home Assistant access to the BYD battery sensor using the plugin entity allowlist.
+- Add multi-architecture Docker build validation for pull requests.
+- Automatically install the official Home Assistant plugin when a token is configured.
+- Correct the ingress terminal HOME path and nginx data-directory permissions.
+- Add the entity allowlist option translation.
+- Preserve the upstream s6-overlay entrypoint and run the gateway as the container main process.
+- Move add-on initialization into an ordered s6 cont-init hook and supervise ingress nginx through s6.
+- Add optional Home Assistant token/URL settings and enable the official Home Assistant plugin when configured.
+
 ## 2026.5.7-20
 
 - Fix the full dashboard router basename by injecting the real ingress `/dashboard` prefix into the served HTML

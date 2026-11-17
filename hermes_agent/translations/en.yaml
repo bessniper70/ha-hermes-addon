@@ -23,6 +23,15 @@ configuration:
   openai_api_key:
     name: OpenAI-compatible API key
     description: Optional OpenAI API key, also used for custom endpoints.
+  hass_token:
+    name: Home Assistant access token
+    description: Long-Lived Access Token. Stored in the add-on private data directory.
+  hass_url:
+    name: Home Assistant URL
+    description: Home Assistant base URL reachable from this add-on.
+  hass_entity_allowlist:
+    name: Home Assistant entity allowlist
+    description: Comma-separated entity IDs or patterns that the Home Assistant tools may read or control.
   enable_dashboard_tui:
     name: Enable dashboard chat tab
     description: Enables Hermes dashboard TUI support.

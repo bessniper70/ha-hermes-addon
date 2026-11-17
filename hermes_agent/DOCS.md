@@ -69,6 +69,18 @@ The add-on currently supports these secret fields:
 
 They are written into the managed section of `/data/.env` on startup.
 
+### Home Assistant connection
+
+The add-on supports the official Hermes `homeassistant` plugin. Create a Long-Lived Access Token in your Home Assistant user profile, then enter it in `hass_token`. Set `hass_url` to the Home Assistant URL reachable from this add-on (default: `http://homeassistant:8123`). By default, `hass_entity_allowlist` limits Home Assistant tools to `sensor.byd_atto_3_battery_level` for the initial read-only test. Expand this comma-separated allowlist only after confirming the connection works. The token is stored in the private `/data/.env` file with owner-only permissions; do not share it in chat or logs.
+
+When `hass_token` is configured, the add-on enables the Home Assistant gateway platform and Hermes automatically exposes the `homeassistant` toolset. If plugin auto-install is disabled in Hermes security settings, install it from the add-on terminal with:
+
+```sh
+hermes plugins install homeassistant
+```
+
+The smart-home tools include `ha_list_entities`, `ha_get_state`, `ha_list_services`, and `ha_call_service`. The add-on automatically installs the official plugin into the default Hermes profile when a token is configured. The `hass_entity_allowlist` is passed to the official plugin as `HASS_ENTITY_ALLOWLIST`, limiting both reads and service-control targets to configured entities. Real-time state-change notifications require at least one event filter under `platforms.homeassistant.extra` in `config.yaml`; the add-on preserves any filters you add there.
+
 ### `enable_dashboard_tui`
 
 Enable Hermes' in-browser chat tab inside the dashboard.
@@ -104,7 +116,7 @@ If you want the full upstream setup flow, install notes, and provider details, s
 
 ## Notes
 
-- This add-on pins Hermes to `v2026.5.7`.
+- This add-on pins Hermes to `v0.23.2`.
 - Supported Home Assistant architectures are `amd64` and `aarch64`.
 - The ingress root page is a custom launcher with an embedded terminal.
 - The full Hermes dashboard is exposed under `/dashboard/` behind ingress.
