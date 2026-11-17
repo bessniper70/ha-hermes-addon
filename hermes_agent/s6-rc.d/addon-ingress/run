@@ -1,5 +1,7 @@
 #!/command/with-contenv sh
 set -eu
+export HOME=/opt/data
+cd /opt/data
 
 TTYD_PID=""
 NGINX_PID=""
