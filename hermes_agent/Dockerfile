@@ -25,7 +25,7 @@ ENV HERMES_HOME=/data
 COPY ingress.conf /etc/nginx/nginx.conf
 COPY landing.html /usr/share/nginx/html/index.html
 COPY addon-run.sh /addon-run.sh
-COPY run.sh /etc/cont-init.d/03-addon-config
+COPY run-after-bootstrap.sh /etc/cont-init.d/03-addon-config
 COPY s6-rc.d/addon-ingress/ /etc/s6-overlay/s6-rc.d/addon-ingress/
 COPY s6-rc.d/user/contents.d/addon-ingress /etc/s6-overlay/s6-rc.d/user/contents.d/addon-ingress
 RUN chmod a+x /etc/cont-init.d/03-addon-config /addon-run.sh /usr/local/bin/ttyd
